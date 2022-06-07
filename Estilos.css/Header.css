@@ -1,0 +1,65 @@
+.Header_1{
+
+    background: linear-gradient(to right, rgb(32, 108, 138),rgb(69, 188, 209) ,rgb(186, 239, 243));
+    
+}
+
+.Header_1{
+
+    padding-top: 30px;
+    padding-bottom: 30px;
+    
+}
+
+.redes{
+
+    list-style: none;
+    position: relative;left: 200px;
+}
+
+.redes li a{
+
+    color: white;
+    margin-top: 10px;
+}
+
+.redes li{
+
+    display: inline;
+    margin-right: 25px;
+}
+
+span{
+
+    margin-right: 10px;
+}
+
+.Bienvenida{
+
+    text-align: end;
+    display: inline;
+}
+
+.slogan{
+
+    width: 100px;
+    height: 80px;
+    position: relative;left: 30px;
+    position:relative; bottom: 80px;
+    
+}
+
+.slogan_2{
+
+    position: relative;bottom: 85px;
+    position: relative;left: 880px;
+
+}
+
+
+
+
+
+
+
+

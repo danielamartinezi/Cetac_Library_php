@@ -1,0 +1,23 @@
+.Libros_General{
+
+    width: 150px;
+    height: 200px;
+}
+
+
+.Biologia > li{
+
+    position: relative;left: 550px;
+}
+
+.Matematicas > li{
+
+    position: relative;left: 550px;
+}
+
+.Cuerpo > background-image{
+
+    width: 500px;
+
+}
+

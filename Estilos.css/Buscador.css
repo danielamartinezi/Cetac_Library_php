@@ -1,0 +1,22 @@
+.Buscador{
+
+    position: relative;left: 700px;
+    position: relative;bottom: 60px;
+}
+
+.Buscador p {
+
+    color: white;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.Gif{
+
+    width: 125px;
+    height: 109px;
+}
+.Gif {
+
+    position: relative;left: 1100px;
+    position: relative;bottom: 131px;
+}

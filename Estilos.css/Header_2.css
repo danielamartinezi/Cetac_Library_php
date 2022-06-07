@@ -1,0 +1,42 @@
+ul li{
+
+    list-style: none;
+    display: inline;
+    margin-right: 20px;
+    
+
+}
+
+ul li a{
+
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    color: white;
+    text-decoration: none;
+}
+
+.header_2{
+    background: linear-gradient(to right, rgb(32, 108, 138), rgb(69, 188, 209), rgb(186, 239, 243));
+    padding-top: 5px;
+    padding-bottom: 5px;
+    position: relative;bottom: 50px;
+}
+
+.login li{
+
+    position: relative;left: 1000px;
+}
+
+.ADMIN{
+
+    
+}
+
+/*Inicio de estilos header 3*/
+
+.header_3{
+
+    background: linear-gradient(to right, rgb(32, 108, 138),rgb(69, 188, 209) ,rgb(186, 239, 243));
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
