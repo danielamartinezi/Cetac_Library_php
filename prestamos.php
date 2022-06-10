@@ -2,16 +2,16 @@
 
 //Se incluye la conexión a la base de datos
 include_once 'cn/conexion_be.php';
+$carreras = $conexion->query('SELECT * FROM cat_licenciaturas');
+$carreras = $carreras->fetch_all(MYSQLI_ASSOC);
 
-if(isset($_GET['opt'])){
-  $opt = $_GET['opt'];
-  $libros = $conexion->query('SELECT * FROM vw_libros where id_licenciaturas = '.$opt);
-}else{
-  $libros = $conexion->query('SELECT * FROM vw_libros');
-}
-$libros = $libros->fetch_all(MYSQLI_ASSOC); 
+//se busca los prestadores
+$prestadores = $conexion->query('SELECT * FROM usuarios WHERE id_perfil = 1');
+$prestadores = $prestadores->fetch_all(MYSQLI_ASSOC);
 
-
+//se busca el que recibe
+$recibe = $conexion->query('SELECT * FROM usuarios WHERE id_perfil BETWEEN 2 AND 4');
+$recibe = $recibe->fetch_all(MYSQLI_ASSOC);
 
 ?>
 <!DOCTYPE html>
@@ -23,6 +23,7 @@ $libros = $libros->fetch_all(MYSQLI_ASSOC);
   <link href="./Estilos.css/bootstrap.min.css" rel="stylesheet">
   <link href="./Estilos.css/fontawesome/css/all.css" rel="stylesheet">
   <script src="./js/bootstrap.bundle.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <style>
 .img-left{width:15%;margin-top:-10%;}
 .img-left img{width:80%;max-width: 100%;}
@@ -57,10 +58,10 @@ $libros = $libros->fetch_all(MYSQLI_ASSOC);
           Libros
           </a>
           <ul class="dropdown-menu fondocolor" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="?opt=1">Tec. Sistemas</a></li>
-            <li><a class="dropdown-item" href="?opt=2">Tec. L.A</a></li>
+            <li><a class="dropdown-item" href="./inicio?opt=1">Tec. Sistemas</a></li>
+            <li><a class="dropdown-item" href="./inicio?opt=2">Tec. L.A</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="?opt=3">Tec. R.H</a></li>
+            <li><a class="dropdown-item" href="./inicio?opt=3">Tec. R.H</a></li>
           </ul>
         </li>
        
@@ -111,44 +112,63 @@ $libros = $libros->fetch_all(MYSQLI_ASSOC);
     </div>
     <div class="col-sm-10">
       <div class="row">
-        <?php
-        $asignatura = "";
-        $licenciaturas = "";
+          <!--Aquí va el formulario-->
+          <form action="/action_page.php">
+            <label for="browser" class="form-label">Carrera</label>
+            <select class="form-select" id = "id_licenciaturas" name = "id_licenciaturas" required >
+                <option selected disabled value = "" >Selecciona la carrera</option>
+                <?php
+                    foreach ($carreras as $dato) :?>
+                        <option value = "<?php echo $dato['id_licenciaturas']?>"><?php echo $dato['descrip_licenciaturas']?> </option>
+               <?php
+                    endforeach;
+                ?>
+            </select>
 
-        foreach ($libros as $datos):         
-          if($asignatura != $datos['descrip_asinaturas'])
-          {
-            $nombre_asignatura = $datos['descrip_asinaturas'];
-            $asignatura = $datos['descrip_asinaturas'];
-          }else{
-            $nombre_asignatura = "";
-          }
-          
-          
-          if($licenciaturas!=$datos['descrip_licenciaturas'])
-          {
-            $nombre_licenciatura = $datos['descrip_licenciaturas'];
-            $licenciaturas = $datos['descrip_licenciaturas'];
+          <label for="browser" class="form-label">Asignaturas</label>
+          <select class="form-select"  id = "id_asignaturas" name = "id_asignaturas" required >
+          <option selected disabled value = "" >Selecciona la asignatura</option>
 
-          }else{
-            $nombre_licenciatura = "";
-          }
-        ?>
-        <?php if(!empty($nombre_licenciatura)){ ?>
-            <h1><?php echo  $nombre_licenciatura; ?></h1>
-        <?php }  ?>
 
-        <?php if(!empty($nombre_asignatura)){ ?>
-            <h4><?php echo  $nombre_asignatura; ?></h4><hr>
-        <?php }  ?>
+          </select>
 
-        <div class="col">          
-          <a href="<?php echo $datos['link'] ?>" target="_BLANK"><img src="<?php echo $datos['imagen']; ?>" width="250px"></a>
+          <label for="browser" class="form-label">Libros</label>
+          <select class="form-select" id = "id_libros" name = "id_libros" required >
+          <option selected disabled value = "" >Selecciona el libro</option>
+          </select>
+
+          <label for="browser" class="form-label">Nombre del que recibe</label>
+          <select class="form-select" id = "id_nombre_recibe" name = "id_nombre_recibe" required>
+          <option selected disabled value = "" >Selecciona la persona que recibe</option>
+          <?php
+            foreach($recibe as $dato) :?>
+                 <option value = "<?php echo $dato['id_usuaarios']?>"><?php echo $dato['nombre']." ".$dato['primer apellido']." ".$dato['segundo apellido'];?>
+          <?php
+            endforeach;
+          ?>
+  
+          </select>
+
+          <label for="browser" class="form-label">Nombre del prestador</label>
+          <select class="form-select" id = "id_nombre_prestador" name = "id_nombre_prestador" required>
+          <option selected disabled value = "" >Selecciona el nombre del prestador</option>
+          <?php
+            foreach($prestadores as $dato) :?>
+                 <option value = "<?php echo $dato['id_usuaarios']?>"><?php echo $dato['nombre']." ".$dato['primer apellido']." ".$dato['segundo apellido'];?>
+          <?php
+            endforeach;
+          ?>
+
+ 
+          </select>
+            <!--Aquí va el textarea que es para las observaciones-->
+            <label for="observaciones">Observaciones:</label></p>
+            <textarea class = "form-control" id="observaciones" name="observaciones" rows="4" cols="50" required></textarea><br>            
+            <input type="submit" class="btn btn-success" value="Solicitar">
         </div>
-        <?php endforeach; ?>
-      </div>
+        </form>
     </div>
-        </div>
+</div>
 </div>
 
 <div class="mt-5 p-4 text-white text-center" style= "background: #5890ca!important">
@@ -166,6 +186,16 @@ $libros = $libros->fetch_all(MYSQLI_ASSOC);
     </div>
 </div>
 
+<script>
+$(document).ready(function(){
+  $("#id_licenciaturas").on("change", function(){
+      valor = $("#id_licenciaturas").val();
+   
+  });
+});
+
+
+</script>
 </body>
 </html>
 
