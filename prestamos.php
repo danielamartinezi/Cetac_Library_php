@@ -13,6 +13,19 @@ $prestadores = $prestadores->fetch_all(MYSQLI_ASSOC);
 $recibe = $conexion->query('SELECT * FROM usuarios WHERE id_perfil BETWEEN 2 AND 4');
 $recibe = $recibe->fetch_all(MYSQLI_ASSOC);
 
+if(isset($_POST['solicitar'])){
+
+  $id_libro = $_POST['id_libros'];
+  $id_nombre_recibe = $_POST['id_nombre_recibe'];
+  $id_nombre_prestador = $_POST['id_nombre_prestador'];
+  $observaciones = $_POST['observaciones'];
+
+  $query = "INSERT INTO prestamos_libros (id_libro, nombre_recibe, nombre_prestador,retorno_libro, observaciones)
+            VALUES ('$id_libro', '$id_nombre_recibe', '$id_nombre_prestador', 0,'$observaciones')";
+  $ejecutar = mysqli_query($conexion, $query);
+
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -113,7 +126,7 @@ $recibe = $recibe->fetch_all(MYSQLI_ASSOC);
     <div class="col-sm-10">
       <div class="row">
           <!--Aquí va el formulario-->
-          <form action="/action_page.php">
+          <form action="" method="POST">
             <label for="browser" class="form-label">Carrera</label>
             <select class="form-select" id = "id_licenciaturas" name = "id_licenciaturas" required >
                 <option selected disabled value = "" >Selecciona la carrera</option>
@@ -164,7 +177,7 @@ $recibe = $recibe->fetch_all(MYSQLI_ASSOC);
             <!--Aquí va el textarea que es para las observaciones-->
             <label for="observaciones">Observaciones:</label></p>
             <textarea class = "form-control" id="observaciones" name="observaciones" rows="4" cols="50" required></textarea><br>            
-            <input type="submit" class="btn btn-success" value="Solicitar">
+            <input type="submit" name="solicitar" class="btn btn-success" value="Solicitar">
         </div>
         </form>
     </div>

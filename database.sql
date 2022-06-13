@@ -255,10 +255,20 @@ CREATE TABLE `prestamos_libros` (
   `fecha_prestamo` datetime DEFAULT NULL,
   `fecha_retorno` datetime DEFAULT NULL,
   `visible` tinyint(4) DEFAULT '1',
-  PRIMARY KEY (`id_prestamos`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+  PRIMARY KEY (`id_prestamos`),
+  KEY `id_libro` (`id_libro`),
+  KEY `nombre_recibe` (`nombre_recibe`),
+  KEY `nombre_prestador` (`nombre_prestador`),
+  CONSTRAINT `prestamos_libros_ibfk_1` FOREIGN KEY (`id_libro`) REFERENCES `libros_carrera_asignaturas` (`id_libros_carrera_asignaturas`),
+  CONSTRAINT `prestamos_libros_ibfk_2` FOREIGN KEY (`nombre_recibe`) REFERENCES `usuarios` (`id_usuaarios`),
+  CONSTRAINT `prestamos_libros_ibfk_3` FOREIGN KEY (`nombre_prestador`) REFERENCES `usuarios` (`id_usuaarios`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 /*Data for the table `prestamos_libros` */
+
+insert  into `prestamos_libros`(`id_prestamos`,`id_libro`,`nombre_recibe`,`nombre_prestador`,`retorno_libro`,`observaciones`,`fecha_prestamo`,`fecha_retorno`,`visible`) values 
+(1,48,2,1,0,'dfqefqwe',NULL,NULL,1),
+(2,46,2,1,0,'prueba2',NULL,NULL,1);
 
 /*Table structure for table `usuarios` */
 
