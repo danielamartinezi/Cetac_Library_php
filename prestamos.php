@@ -190,8 +190,64 @@ $recibe = $recibe->fetch_all(MYSQLI_ASSOC);
 $(document).ready(function(){
   $("#id_licenciaturas").on("change", function(){
       valor = $("#id_licenciaturas").val();
-   
+
+      $.ajax({
+        url: 'getAsignaturas.php',
+        type: 'post',
+        dataType: 'json',
+        data: {id_licenciatura:valor},
+        
+        success: function (response, textStatus, jqXHR) {
+          $("#id_asignaturas").empty();
+
+          response.forEach(function(elemento, indice) {
+            asignatura = elemento['descrip_asinaturas'];
+            id_asignatura = elemento['id_asignaturas'];          
+
+            $("#id_asignaturas").append(new Option(asignatura, id_asignatura));           
+
+          });
+
+        },
+        
+        error: function (jqXHR, textStatus, errorThrown) {
+          alert('error');
+          console.log('error(s):' + textStatus, errorThrown);
+        }
+      });   
   });
+  
+
+  $("#id_asignaturas").on("change", function(){
+    licenciatura = $("#id_licenciaturas").val();
+    asignatura = $("#id_asignaturas").val();
+
+      $.ajax({
+        url: 'getLibros.php',
+        type: 'post',
+        dataType: 'json',
+        data: {id_licenciaturas:licenciatura,id_asignaturas:asignatura},
+        
+        success: function (response, textStatus, jqXHR) {
+          $("#id_libros").empty();
+
+          response.forEach(function(elemento, indice) {
+            libro = elemento['descrip_libros'];
+            id_libro = elemento['id_libros_carrera_asignaturas'];          
+
+            $("#id_libros").append(new Option(libro, id_libro));           
+
+          });
+
+        },
+        
+        error: function (jqXHR, textStatus, errorThrown) {
+          alert('error');
+          console.log('error(s):' + textStatus, errorThrown);
+        }
+      });   
+  });
+  
 });
 
 

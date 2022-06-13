@@ -10,10 +10,7 @@ if(isset($_GET['opt'])){
 }else{
   $libros = $conexion->query('SELECT * FROM vw_libros');
 }
-$libros = $libros->fetch_all(MYSQLI_ASSOC); 
-
-
-
+$libros = $libros->fetch_all(MYSQLI_ASSOC);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -90,19 +87,19 @@ $libros = $libros->fetch_all(MYSQLI_ASSOC);
     <div class="col-sm-2">
       <h2>About Me</h2>
       <h5>Photo of me:</h5>
-      <div class="fakeimg">Fake Image</div>
+      <div class="fakeimg">Fake</div>
       <p>Some text about me in culpa qui officia deserunt mollit anim..</p>
-      <h3 class="mt-4">Some Links</h3>
+      <h3 class="mt-4">Menu</h3>
       <p>Lorem ipsum dolor sit ame.</p>
       <ul class="nav nav-pills flex-column">
         <li class="nav-item">
-          <a class="nav-link active" href="#">Active</a>
+          <a class="nav-link active" href="#">libros</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">link</a>
+          <a class="nav-link" href="#">carreras</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
+          <a class="nav-link" href="#">Asignaturas</a>
         </li>
         <li class="nav-item">
           <a class="nav-link disabled" href="#">Disabled</a>
