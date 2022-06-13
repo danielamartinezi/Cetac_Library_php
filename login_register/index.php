@@ -37,7 +37,7 @@
                     <button>Entrar</button>
                 </form>
                <!--Registro-->
-                <form action="php/registro_usuario_be.php" method="POST" class="formulario__register">
+                <form action="login_register/registro_usuario_be.php" method="POST" class="formulario__register">
 
                     <h2>Registrarse</h2>
                     <input type="text" placeholder="Nombre completo" name="nombre">

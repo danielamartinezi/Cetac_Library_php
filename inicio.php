@@ -1,7 +1,8 @@
 <?php 
 
 //Se incluye la conexión a la base de datos
-include_once 'cn/conexion_be.php';
+//include_once 'cn/conexion_be.php';
+include('cn/conexion_be.php');
 
 $libros = $conexion->query('SELECT * FROM cat_libros');
 $libros = $libros->fetch_all(MYSQLI_ASSOC); 
@@ -12,7 +13,7 @@ $conexion->close();
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Bootstrap 5 Website Example</title>
+  <title>CETAC LIBRARY // INICIO</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="./Estilos.css/bootstrap.min.css" rel="stylesheet">

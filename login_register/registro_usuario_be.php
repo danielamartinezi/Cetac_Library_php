@@ -8,13 +8,10 @@ $correo = $_POST['email'];
 $usuario = $_POST['usser'];
 $contrasena = $_POST['passwd'];
 
-$query = "INSERT INTO usuarios('nombre_completo', 'correo', 'usuario', 'contrasena')
-          Values('$nombre_completo', '$correo', '$usuario', '$contrasena')";
+$query = "INSERT INTO usuarios('nombre', 'correo_elec', 'contraseña')
+          Values('$nombre_completo', '$correo', '$contrasena')";
 
 $ejecutar = mysqli_query($conexion, $query);
-
-
-
 
 
 ?>
