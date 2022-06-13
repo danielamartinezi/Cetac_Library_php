@@ -25,16 +25,19 @@ CREATE TABLE `cat_asignaturas` (
   `descrip_asinaturas` varchar(150) COLLATE utf8_spanish_ci DEFAULT NULL,
   `visible` tinyint(4) DEFAULT '1',
   PRIMARY KEY (`id_asignaturas`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 /*Data for the table `cat_asignaturas` */
 
 insert  into `cat_asignaturas`(`id_asignaturas`,`descrip_asinaturas`,`visible`) values 
-(1,'Filosofía ',1),
-(2,'Modulo',1),
-(3,'biologia 1',1),
-(4,'Geometria y Trigonmetria ',1),
-(5,'calculo integral',1);
+(1,'Biologia',1),
+(2,'Ingles',1),
+(3,'Literatura',1),
+(4,'Matematicas',1),
+(5,'Quimica',1),
+(6,'Programación',1),
+(7,'Ambiental',1),
+(8,'Recursos Humanos',1);
 
 /*Table structure for table `cat_libros` */
 
@@ -103,14 +106,14 @@ CREATE TABLE `cat_licenciaturas` (
   `descrip_licenciaturas` varchar(200) COLLATE utf8_spanish_ci DEFAULT NULL,
   `visble` tinyint(4) DEFAULT '1',
   PRIMARY KEY (`id_licenciaturas`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 /*Data for the table `cat_licenciaturas` */
 
 insert  into `cat_licenciaturas`(`id_licenciaturas`,`descrip_licenciaturas`,`visble`) values 
 (1,'Técnico en programación',1),
-(2,'Técnico en recursos humanos ',1),
-(3,'Tecnico en laboratorio ambiental ',1);
+(2,'Tecnico en laboratorio ambiental ',1),
+(3,'Técnico en recursos humanos ',1);
 
 /*Table structure for table `cat_perfiles` */
 
@@ -148,14 +151,95 @@ CREATE TABLE `libros_carrera_asignaturas` (
   CONSTRAINT `libros_carrera_asignaturas_ibfk_1` FOREIGN KEY (`id_libros`) REFERENCES `cat_libros` (`id_libros`),
   CONSTRAINT `libros_carrera_asignaturas_ibfk_2` FOREIGN KEY (`id_carrera`) REFERENCES `cat_licenciaturas` (`id_licenciaturas`),
   CONSTRAINT `libros_carrera_asignaturas_ibfk_3` FOREIGN KEY (`id_asignaturas`) REFERENCES `cat_asignaturas` (`id_asignaturas`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=85 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 /*Data for the table `libros_carrera_asignaturas` */
 
 insert  into `libros_carrera_asignaturas`(`id_libros_carrera_asignaturas`,`id_libros`,`id_carrera`,`id_asignaturas`,`visible`) values 
-(1,1,1,4,1),
-(2,1,2,4,1),
-(3,1,3,4,1);
+(1,1,1,1,1),
+(2,2,1,1,1),
+(3,3,1,1,1),
+(4,4,1,1,1),
+(5,5,1,1,1),
+(6,6,1,1,1),
+(7,7,1,2,1),
+(8,8,1,2,1),
+(9,9,1,2,1),
+(10,10,1,2,1),
+(11,11,1,3,1),
+(12,12,1,3,1),
+(13,13,1,3,1),
+(14,14,1,3,1),
+(15,15,1,3,1),
+(16,16,1,3,1),
+(17,17,1,3,1),
+(18,18,1,4,1),
+(19,19,1,4,1),
+(20,20,1,5,1),
+(21,21,1,5,1),
+(22,22,1,5,1),
+(23,23,1,6,1),
+(24,24,1,6,1),
+(25,25,1,6,1),
+(26,26,1,6,1),
+(27,27,1,6,1),
+(28,28,1,6,1),
+(29,29,1,6,1),
+(30,30,1,6,1),
+(31,31,1,6,1),
+(32,1,2,1,1),
+(33,2,2,1,1),
+(34,3,2,1,1),
+(35,4,2,1,1),
+(36,5,2,1,1),
+(37,6,2,1,1),
+(38,7,2,2,1),
+(39,8,2,2,1),
+(40,9,2,2,1),
+(41,10,2,2,1),
+(42,11,2,3,1),
+(43,12,2,3,1),
+(44,13,2,3,1),
+(45,14,2,3,1),
+(46,15,2,3,1),
+(47,16,2,4,1),
+(48,17,2,4,1),
+(49,18,2,4,1),
+(50,19,2,4,1),
+(51,20,2,5,1),
+(52,21,2,5,1),
+(53,22,2,5,1),
+(54,32,2,7,1),
+(55,33,2,7,1),
+(56,34,2,7,1),
+(57,35,2,7,1),
+(58,1,3,1,1),
+(59,2,3,1,1),
+(60,3,3,1,1),
+(61,4,3,1,1),
+(62,5,3,1,1),
+(63,6,3,1,1),
+(64,7,3,2,1),
+(65,8,3,2,1),
+(66,9,3,2,1),
+(67,10,3,2,1),
+(68,11,3,3,1),
+(69,12,3,3,1),
+(70,13,3,3,1),
+(71,14,3,3,1),
+(72,15,3,3,1),
+(73,16,3,4,1),
+(74,17,3,4,1),
+(75,18,3,4,1),
+(76,19,3,4,1),
+(77,20,3,5,1),
+(78,21,3,5,1),
+(79,22,3,5,1),
+(80,36,3,8,1),
+(81,37,3,8,1),
+(82,38,3,8,1),
+(83,39,3,8,1),
+(84,40,3,8,1);
 
 /*Table structure for table `prestamos_libros` */
 
@@ -167,6 +251,7 @@ CREATE TABLE `prestamos_libros` (
   `nombre_recibe` int(11) DEFAULT NULL,
   `nombre_prestador` int(11) DEFAULT NULL,
   `retorno_libro` tinyint(4) DEFAULT '0',
+  `observaciones` text COLLATE utf8_spanish_ci,
   `fecha_prestamo` datetime DEFAULT NULL,
   `fecha_retorno` datetime DEFAULT NULL,
   `visible` tinyint(4) DEFAULT '1',
@@ -192,12 +277,40 @@ CREATE TABLE `usuarios` (
   PRIMARY KEY (`id_usuaarios`),
   KEY `id_perfil` (`id_perfil`),
   CONSTRAINT `usuarios_ibfk_1` FOREIGN KEY (`id_perfil`) REFERENCES `cat_perfiles` (`id_perfil`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 /*Data for the table `usuarios` */
 
 insert  into `usuarios`(`id_usuaarios`,`nombre`,`primer apellido`,`segundo apellido`,`fec_nac`,`correo_elec`,`contraseña`,`id_perfil`,`visible`) values 
-(1,' sandra daniela ','martinez ','ibarra','2003-09-23','ibarrasdaniela@gmail','b1226879bfdb68676e460f03e8f85a96',1,1);
+(1,' sandra daniela ','martinez ','ibarra','2003-09-23','ibarrasdaniela@gmail','b1226879bfdb68676e460f03e8f85a96',1,1),
+(2,'Erick Yahir','Sandoval','Rodriguez','2003-09-26',NULL,NULL,3,1);
+
+/*Table structure for table `vw_libros` */
+
+DROP TABLE IF EXISTS `vw_libros`;
+
+/*!50001 DROP VIEW IF EXISTS `vw_libros` */;
+/*!50001 DROP TABLE IF EXISTS `vw_libros` */;
+
+/*!50001 CREATE TABLE  `vw_libros`(
+ `id_libros_carrera_asignaturas` int(11) ,
+ `id_licenciaturas` int(11) ,
+ `descrip_licenciaturas` varchar(200) ,
+ `id_asignaturas` int(11) ,
+ `descrip_asinaturas` varchar(150) ,
+ `id_libros` int(11) ,
+ `descrip_libros` varchar(150) ,
+ `detalles_libros` text ,
+ `imagen` text ,
+ `link` text 
+)*/;
+
+/*View structure for view vw_libros */
+
+/*!50001 DROP TABLE IF EXISTS `vw_libros` */;
+/*!50001 DROP VIEW IF EXISTS `vw_libros` */;
+
+/*!50001 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vw_libros` AS (select `a`.`id_libros_carrera_asignaturas` AS `id_libros_carrera_asignaturas`,`b`.`id_licenciaturas` AS `id_licenciaturas`,`b`.`descrip_licenciaturas` AS `descrip_licenciaturas`,`c`.`id_asignaturas` AS `id_asignaturas`,`c`.`descrip_asinaturas` AS `descrip_asinaturas`,`d`.`id_libros` AS `id_libros`,`d`.`descrip_libros` AS `descrip_libros`,`d`.`detalles_libros` AS `detalles_libros`,`d`.`imagen` AS `imagen`,`d`.`link` AS `link` from (((`libros_carrera_asignaturas` `a` left join `cat_licenciaturas` `b` on((`a`.`id_carrera` = `b`.`id_licenciaturas`))) left join `cat_asignaturas` `c` on((`a`.`id_asignaturas` = `c`.`id_asignaturas`))) left join `cat_libros` `d` on((`a`.`id_libros` = `d`.`id_libros`)))) */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
