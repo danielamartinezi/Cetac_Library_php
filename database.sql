@@ -106,7 +106,7 @@ CREATE TABLE `cat_licenciaturas` (
   `descrip_licenciaturas` varchar(200) COLLATE utf8_spanish_ci DEFAULT NULL,
   `visble` tinyint(4) DEFAULT '1',
   PRIMARY KEY (`id_licenciaturas`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 /*Data for the table `cat_licenciaturas` */
 
@@ -262,13 +262,13 @@ CREATE TABLE `prestamos_libros` (
   CONSTRAINT `prestamos_libros_ibfk_1` FOREIGN KEY (`id_libro`) REFERENCES `libros_carrera_asignaturas` (`id_libros_carrera_asignaturas`),
   CONSTRAINT `prestamos_libros_ibfk_2` FOREIGN KEY (`nombre_recibe`) REFERENCES `usuarios` (`id_usuaarios`),
   CONSTRAINT `prestamos_libros_ibfk_3` FOREIGN KEY (`nombre_prestador`) REFERENCES `usuarios` (`id_usuaarios`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 /*Data for the table `prestamos_libros` */
 
 insert  into `prestamos_libros`(`id_prestamos`,`id_libro`,`nombre_recibe`,`nombre_prestador`,`retorno_libro`,`observaciones`,`fecha_prestamo`,`fecha_retorno`,`visible`) values 
-(1,48,2,1,0,'dfqefqwe',NULL,NULL,1),
-(2,46,2,1,0,'prueba2',NULL,NULL,1);
+(10,8,2,3,1,'caqcwq','2022-06-16 11:06:32','2022-06-17 10:06:14',1),
+(11,54,2,1,1,'ejemplo','2022-06-16 11:06:56','2022-06-17 10:06:16',1);
 
 /*Table structure for table `usuarios` */
 
@@ -287,13 +287,14 @@ CREATE TABLE `usuarios` (
   PRIMARY KEY (`id_usuaarios`),
   KEY `id_perfil` (`id_perfil`),
   CONSTRAINT `usuarios_ibfk_1` FOREIGN KEY (`id_perfil`) REFERENCES `cat_perfiles` (`id_perfil`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 /*Data for the table `usuarios` */
 
 insert  into `usuarios`(`id_usuaarios`,`nombre`,`primer apellido`,`segundo apellido`,`fec_nac`,`correo_elec`,`contraseña`,`id_perfil`,`visible`) values 
 (1,' sandra daniela ','martinez ','ibarra','2003-09-23','ibarrasdaniela@gmail','b1226879bfdb68676e460f03e8f85a96',1,1),
-(2,'Erick Yahir','Sandoval','Rodriguez','2003-09-26',NULL,NULL,3,1);
+(2,'Erick Yahir','Sandoval','Rodriguez','2003-09-26',NULL,NULL,3,1),
+(3,'daniela','martinez','ibarra',NULL,'ibarrasdaniela','daniela',1,1);
 
 /*Table structure for table `vw_libros` */
 
@@ -315,12 +316,38 @@ DROP TABLE IF EXISTS `vw_libros`;
  `link` text 
 )*/;
 
+/*Table structure for table `vw_listado_prestamo` */
+
+DROP TABLE IF EXISTS `vw_listado_prestamo`;
+
+/*!50001 DROP VIEW IF EXISTS `vw_listado_prestamo` */;
+/*!50001 DROP TABLE IF EXISTS `vw_listado_prestamo` */;
+
+/*!50001 CREATE TABLE  `vw_listado_prestamo`(
+ `id_prestamos` int(11) ,
+ `solicita` varchar(302) ,
+ `entrega` varchar(302) ,
+ `descrip_licenciaturas` varchar(200) ,
+ `descrip_asinaturas` varchar(150) ,
+ `descrip_libros` varchar(150) ,
+ `fecha_prestamo` varchar(23) ,
+ `retorno_libro` tinyint(4) ,
+ `fecha_retorno` datetime 
+)*/;
+
 /*View structure for view vw_libros */
 
 /*!50001 DROP TABLE IF EXISTS `vw_libros` */;
 /*!50001 DROP VIEW IF EXISTS `vw_libros` */;
 
 /*!50001 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vw_libros` AS (select `a`.`id_libros_carrera_asignaturas` AS `id_libros_carrera_asignaturas`,`b`.`id_licenciaturas` AS `id_licenciaturas`,`b`.`descrip_licenciaturas` AS `descrip_licenciaturas`,`c`.`id_asignaturas` AS `id_asignaturas`,`c`.`descrip_asinaturas` AS `descrip_asinaturas`,`d`.`id_libros` AS `id_libros`,`d`.`descrip_libros` AS `descrip_libros`,`d`.`detalles_libros` AS `detalles_libros`,`d`.`imagen` AS `imagen`,`d`.`link` AS `link` from (((`libros_carrera_asignaturas` `a` left join `cat_licenciaturas` `b` on((`a`.`id_carrera` = `b`.`id_licenciaturas`))) left join `cat_asignaturas` `c` on((`a`.`id_asignaturas` = `c`.`id_asignaturas`))) left join `cat_libros` `d` on((`a`.`id_libros` = `d`.`id_libros`)))) */;
+
+/*View structure for view vw_listado_prestamo */
+
+/*!50001 DROP TABLE IF EXISTS `vw_listado_prestamo` */;
+/*!50001 DROP VIEW IF EXISTS `vw_listado_prestamo` */;
+
+/*!50001 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vw_listado_prestamo` AS (select `a`.`id_prestamos` AS `id_prestamos`,concat(`c`.`nombre`,' ',`c`.`primer apellido`,' ',`c`.`segundo apellido`) AS `solicita`,concat(`d`.`nombre`,' ',`d`.`primer apellido`,' ',`d`.`segundo apellido`) AS `entrega`,`b`.`descrip_licenciaturas` AS `descrip_licenciaturas`,`b`.`descrip_asinaturas` AS `descrip_asinaturas`,`b`.`descrip_libros` AS `descrip_libros`,date_format(`a`.`fecha_prestamo`,'%d-%m-%Y %H:%m%p') AS `fecha_prestamo`,`a`.`retorno_libro` AS `retorno_libro`,`a`.`fecha_retorno` AS `fecha_retorno` from (((`prestamos_libros` `a` left join `vw_libros` `b` on((`a`.`id_libro` = `b`.`id_libros_carrera_asignaturas`))) left join `usuarios` `c` on((`a`.`nombre_recibe` = `c`.`id_usuaarios`))) left join `usuarios` `d` on((`a`.`nombre_prestador` = `d`.`id_usuaarios`)))) */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
