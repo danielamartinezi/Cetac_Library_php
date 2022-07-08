@@ -9,7 +9,7 @@ if(isset($_GET['opt'])){
   $libros = $conexion->query('SELECT * FROM vw_libros where id_licenciaturas = '.$opt);
 }else{
   $libros = $conexion->query('SELECT * FROM vw_libros');
-}
+}       
 $libros = $libros->fetch_all(MYSQLI_ASSOC);
 ?>
 <!DOCTYPE html>

@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="assets/css/estilos.css">
     
 </head>
-<body>
+<body style="background-image:url('../imagenes/Fondo_registro_2.jfif')">
     <main>
 
         <div class="contenedor__todo">
@@ -40,7 +40,9 @@
                 <form action="registro_usuario_be.php" method="POST" class="formulario__register">
 
                     <h2>Registrarse</h2>
-                    <input type="text" placeholder="Nombre completo" name="nombre">
+                    <input type="text" placeholder="Nombre" name="nombre">
+                    <input type="text" placeholder="primer apellido" name="primerApellido">
+                    <input type="text" placeholder="segundo apellido" name="segundoApellido">
                     <input type="text" placeholder="Correo electronico" name="email">
                     <input type="text" placeholder="Usuario" name="usser">
                     <input type="password" placeholder="contraseña" name="passwd">
