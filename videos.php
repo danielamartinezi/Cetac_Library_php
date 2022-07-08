@@ -1,25 +1,3 @@
-<?php 
-
-//Se incluye la conexión a la base de datos
-//include_once 'cn/conexion_be.php';
-include('cn/conexion_be.php');
-
-if(isset($_GET['opt'])){
-  $opt = $_GET['opt'];
-  $libros = $conexion->query('SELECT * FROM vw_libros where id_licenciaturas = '.$opt);
-}else{
-
-  if(isset($_GET['busqueda'])){
-    $busqueda = $_GET['busqueda'];
-    $libros = $conexion->query('SELECT * FROM vw_libros where descrip_libros LIKE "%'.$busqueda.'%"');
-
-  }else{
-    $libros = $conexion->query('SELECT * FROM vw_libros');
-  }
-  
-}
-$libros = $libros->fetch_all(MYSQLI_ASSOC);
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,7 +6,13 @@ $libros = $libros->fetch_all(MYSQLI_ASSOC);
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="./Estilos.css/bootstrap.min.css" rel="stylesheet">
   <link href="./Estilos.css/fontawesome/css/all.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="./assets/datatables.min.css"/>
+  <link rel="stylesheet" type="text/css" href="./assets/datatables.css">
+
+  <script type="text/javascript" src="./assets/datatables.min.js"></script>
   <script src="./js/bootstrap.bundle.min.js"></script>
+  <script src="./js/jquery.min.js"></script>
+  <script type="text/javascript" charset="utf8" src="./assets/datatables.js"></script>
   <style>
 .img-left{width:15%;margin-top:-10%;}
 .img-left img{width:80%;max-width: 100%;}
@@ -63,10 +47,10 @@ $libros = $libros->fetch_all(MYSQLI_ASSOC);
           Libros
           </a>
           <ul class="dropdown-menu fondocolor" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="?opt=1">Tec. Sistemas</a></li>
-            <li><a class="dropdown-item" href="?opt=2">Tec. L.A</a></li>
+            <li><a class="dropdown-item" href="./inicio?opt=1">Tec. Sistemas</a></li>
+            <li><a class="dropdown-item" href="./inicio?opt=2">Tec. L.A</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="?opt=3">Tec. R.H</a></li>
+            <li><a class="dropdown-item" href="./inicio?opt=3">Tec. R.H</a></li>
           </ul>
         </li>
        
@@ -83,66 +67,27 @@ $libros = $libros->fetch_all(MYSQLI_ASSOC);
         </li>
       
     </ul>
-    <form class="d-flex" method="GET">
-        <input class="form-control me-2" type="text" placeholder="Escribir el libro" name="busqueda" id="busqueda">
-        <button type="submit" class="btn btn-primary" type="button">Buscar</button>
+    <form class="d-flex">
       </form>
   </div>
 </nav>
 
 <div class="container mt-5">
   <div class="row">
-    <div class="col-sm-2">
-    <img src="image/qr-code.png" class="" alt="" width="100%" >
-      
-      <div class="fakeimg">Informacion</div>
-      <p>para mayor informacion scannear QR</p>
-    
-        </li>
-      </ul>
-      <hr class="d-sm-none">
-    </div>
-    <div class="col-sm-10">
+ 
+    <div class="col-sm-12">
       <div class="row">
-        <?php
-        $asignatura = "";
-        $licenciaturas = "";
-
-        foreach ($libros as $datos):         
-          if($asignatura != $datos['descrip_asinaturas'])
-          {
-            $nombre_asignatura = $datos['descrip_asinaturas'];
-            $asignatura = $datos['descrip_asinaturas'];
-          }else{
-            $nombre_asignatura = "";
-          }
-          
-          
-          if($licenciaturas!=$datos['descrip_licenciaturas'])
-          {
-            $nombre_licenciatura = $datos['descrip_licenciaturas'];
-            $licenciaturas = $datos['descrip_licenciaturas'];
-
-          }else{
-            $nombre_licenciatura = "";
-          }
-        ?>
-        <?php if(!empty($nombre_licenciatura)){ ?>
-            <h1><?php echo  $nombre_licenciatura; ?></h1>
-        <?php }  ?>
-
-        <?php if(!empty($nombre_asignatura)){ ?>
-            <h4><?php echo  $nombre_asignatura; ?></h4><hr>
-        <?php }  ?>
-
-        <div class="col">          
-          <a href="<?php echo $datos['link'] ?>" target="_BLANK"><img src="<?php echo $datos['imagen']; ?>" width="250px"></a>
-          <hr><h6 style ="color: blue"><?php echo $datos['descrip_libros']; ?></h6>
+        <div class="col-sm-12">
+          <h1>Listado de videos</h1>
+          <h5 style="color:red"></h5>
         </div>
-        <?php endforeach; ?>
-      </div>
+        <div class="col">
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/HKFDsC_rMpU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>      
+         
+         
     </div>
-        </div>
+</div>
 </div>
 
 <div class="mt-5 p-4 text-white text-center" style= "background: #5890ca!important">
@@ -160,7 +105,7 @@ $libros = $libros->fetch_all(MYSQLI_ASSOC);
     </div>
 </div>
 
+
 </body>
 </html>
 
-<?php $conexion->close(); ?>

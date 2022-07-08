@@ -1,4 +1,6 @@
 <?php 
+date_default_timezone_set('America/Mexico_City');
+$mensaje = "";
 
 //Se incluye la conexión a la base de datos
 include_once 'cn/conexion_be.php';
@@ -19,10 +21,14 @@ if(isset($_POST['solicitar'])){
   $id_nombre_recibe = $_POST['id_nombre_recibe'];
   $id_nombre_prestador = $_POST['id_nombre_prestador'];
   $observaciones = $_POST['observaciones'];
+  $fecha = date('Y-m-d H:m:s');
 
-  $query = "INSERT INTO prestamos_libros (id_libro, nombre_recibe, nombre_prestador,retorno_libro, observaciones)
-            VALUES ('$id_libro', '$id_nombre_recibe', '$id_nombre_prestador', 0,'$observaciones')";
+  $query = "INSERT INTO prestamos_libros (id_libro, nombre_recibe, nombre_prestador,retorno_libro, observaciones, fecha_prestamo)
+            VALUES ('$id_libro', '$id_nombre_recibe', '$id_nombre_prestador', 0,'$observaciones', '$fecha')";
   $ejecutar = mysqli_query($conexion, $query);
+  if($ejecutar == 1){
+    $mensaje = "Datos guardados"; 
+  }
 
 }
 
@@ -30,13 +36,13 @@ if(isset($_POST['solicitar'])){
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Bootstrap 5 Website Example</title>
+  <title>CETAC Library</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="./Estilos.css/bootstrap.min.css" rel="stylesheet">
   <link href="./Estilos.css/fontawesome/css/all.css" rel="stylesheet">
   <script src="./js/bootstrap.bundle.min.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="./js/jquery.min.js"></script>
   <style>
 .img-left{width:15%;margin-top:-10%;}
 .img-left img{width:80%;max-width: 100%;}
@@ -83,17 +89,15 @@ if(isset($_POST['solicitar'])){
           servicios
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="">Videos educativos</a></li>
+            <li><a class="dropdown-item" href="./videos.php">Videos educativos</a></li>
             <li><a class="dropdown-item" href="./prestamos.php">Prestamos de libros</a></li>
+            <li><a class="dropdown-item" href="./listado_prestamos.php">Listado de libros</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Informacion sobre libros</a></li>
           </ul>
         </li>
       
     </ul>
     <form class="d-flex">
-        <input class="form-control me-2" type="text" placeholder="Escribir el libro">
-        <button class="btn btn-primary" type="button">Buscar</button>
       </form>
   </div>
 </nav>
@@ -101,35 +105,21 @@ if(isset($_POST['solicitar'])){
 <div class="container mt-5">
   <div class="row">
     <div class="col-sm-2">
-      <h2>About Me</h2>
-      <h5>Photo of me:</h5>
-      <div class="fakeimg">Fake Image</div>
-      <p>Some text about me in culpa qui officia deserunt mollit anim..</p>
-      <h3 class="mt-4">Some Links</h3>
-      <p>Lorem ipsum dolor sit ame.</p>
-      <ul class="nav nav-pills flex-column">
-        <li class="nav-item">
-          <a class="nav-link active" href="#">Active</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">link</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link disabled" href="#">Disabled</a>
         </li>
       </ul>
       <hr class="d-sm-none">
     </div>
-    <div class="col-sm-10">
+    <div class="col-sm-12">
       <div class="row">
+        <div class="col-sm-12">
+          <h1>Solicitudes de Libros</h1>
+          <h5 style="color:red"><?php echo $mensaje; ?></h5>
+        </div>
           <!--Aquí va el formulario-->
           <form action="" method="POST">
             <label for="browser" class="form-label">Carrera</label>
             <select class="form-select" id = "id_licenciaturas" name = "id_licenciaturas" required >
-                <option selected disabled value = "" >Selecciona la carrera</option>
+                <option selected disabled value = "" >Seleccione la carrera</option>
                 <?php
                     foreach ($carreras as $dato) :?>
                         <option value = "<?php echo $dato['id_licenciaturas']?>"><?php echo $dato['descrip_licenciaturas']?> </option>
@@ -140,19 +130,19 @@ if(isset($_POST['solicitar'])){
 
           <label for="browser" class="form-label">Asignaturas</label>
           <select class="form-select"  id = "id_asignaturas" name = "id_asignaturas" required >
-          <option selected disabled value = "" >Selecciona la asignatura</option>
+          <option selected disabled value = "" >Seleccione la asignatura</option>
 
 
           </select>
 
           <label for="browser" class="form-label">Libros</label>
           <select class="form-select" id = "id_libros" name = "id_libros" required >
-          <option selected disabled value = "" >Selecciona el libro</option>
+          <option selected disabled value = "" >Seleccione el libro</option>
           </select>
 
           <label for="browser" class="form-label">Nombre del que recibe</label>
           <select class="form-select" id = "id_nombre_recibe" name = "id_nombre_recibe" required>
-          <option selected disabled value = "" >Selecciona la persona que recibe</option>
+          <option selected disabled value = "" >Seleccione la persona que recibe</option>
           <?php
             foreach($recibe as $dato) :?>
                  <option value = "<?php echo $dato['id_usuaarios']?>"><?php echo $dato['nombre']." ".$dato['primer apellido']." ".$dato['segundo apellido'];?>
@@ -164,7 +154,7 @@ if(isset($_POST['solicitar'])){
 
           <label for="browser" class="form-label">Nombre del prestador</label>
           <select class="form-select" id = "id_nombre_prestador" name = "id_nombre_prestador" required>
-          <option selected disabled value = "" >Selecciona el nombre del prestador</option>
+          <option selected disabled value = "" >Seleccione el nombre del prestador</option>
           <?php
             foreach($prestadores as $dato) :?>
                  <option value = "<?php echo $dato['id_usuaarios']?>"><?php echo $dato['nombre']." ".$dato['primer apellido']." ".$dato['segundo apellido'];?>
@@ -212,6 +202,7 @@ $(document).ready(function(){
         
         success: function (response, textStatus, jqXHR) {
           $("#id_asignaturas").empty();
+          $("#id_asignaturas").append(new Option("Seleccione la asignatura", ""));
 
           response.forEach(function(elemento, indice) {
             asignatura = elemento['descrip_asinaturas'];
@@ -243,6 +234,7 @@ $(document).ready(function(){
         
         success: function (response, textStatus, jqXHR) {
           $("#id_libros").empty();
+          $("#id_libros").append(new Option("Seleccione el libro", ""));
 
           response.forEach(function(elemento, indice) {
             libro = elemento['descrip_libros'];
