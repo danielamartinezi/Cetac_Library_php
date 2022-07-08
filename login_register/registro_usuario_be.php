@@ -13,47 +13,35 @@ $contrasena = $_POST['passwd'];
 
 
 
-$query = "INSERT INTO usuarios(nombre, primer_apellido, segundo_apellido, correo_elec, usuario, contraseña)
-          Values('$nombre_completo', '$Primer_apellido', '$Segundo_apellido', '$correo', $usuario '$contrasena')";
+$query = "INSERT INTO usuarios(nombre, primer_apellido, segundo_apellido, correo_elec, contrasenia, id_perfil, usuario)
+          VALUES('$nombre_completo', '$Primer_apellido', '$Segundo_apellido', '$correo', '$contrasena', '3','$usuario')";
 
 
 //verificar que el correo no se repita en la base de datos
-$verificar_correo = mysqli_query($conexion, "SELECT * FROM usuarios WHERE correo_elec = '$correo'",);
+$verificar_correo = mysqli_query($conexion, "SELECT * FROM usuarios WHERE correo_elec = '$correo'");
+$verificar_correo = $verificar_correo->fetch_all(MYSQLI_ASSOC);
 
-if(mysqli_num_rows($verificar_correo) > 0){
-    echo '
-         <script>
-               alert("Este correo ya esta registrado, intenta con otro");
-               window.location = "../login_register/index.php";         
-         </script>
-    ';
-}
+if(empty($verificar_correo)){  
+    $ejecutar = mysqli_query($conexion, $query);
+    if($ejecutar==1){
 
-//verificar que el usuario no se repita en la base de datos
+        echo'
+            <script>
+                alert("El usuario se ha almacenado exitosamente");
+                window.location= "../login_register/index.php";
+            </script>
+            ';
+     }  
 
-$verificar_usuario = mysqli_query($conexion, "SELECT * FROM usuarios WHERE usuario ='$usuario' ");
-
-if(mysqli_num_rows($verificar_usuario)>0){
-    echo'
-         <script>
-               alert("Este usuario ya esta registrado, intente con otro");
-               window.location = "../login_register/index.php";
-         </script>
-         ';
-
+}else{
+    echo "correo ya registrado";
 }
 
 
-$ejecutar = mysqli_query($conexion, $query);
 
- if($ejecutar){
 
-    echo'
-        <script>
-            alert("El usuario se ha almacenado exitosamente");
-            window.location= "../login_register/index.php";
-        </script>
-        ';
- }
+
+
+
 
 ?>
